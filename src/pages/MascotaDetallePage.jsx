@@ -7,7 +7,7 @@ function MascotaDetallePage() {
     // Obtengo el id de la mascota desde la URL
     const { id } = useParams();
 
-    // Lo uso para volver al listado despues de eliminar
+    // Lo uso para volver al listado después de eliminar
     const navigate = useNavigate();
 
     // Acá guardo la mascota que viene de la API
@@ -26,7 +26,6 @@ function MascotaDetallePage() {
             if (response.status === 200) {
                 setMascota(response.data);
             }
-
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
@@ -54,7 +53,6 @@ function MascotaDetallePage() {
                 alert("Estado actualizado correctamente");
                 await fetchMascota();
             }
-
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
@@ -81,7 +79,6 @@ function MascotaDetallePage() {
                 alert("Mascota eliminada correctamente");
                 navigate("/");
             }
-
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
@@ -110,7 +107,6 @@ function MascotaDetallePage() {
                 await fetchMascota();
                 return true;
             }
-
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
@@ -128,8 +124,41 @@ function MascotaDetallePage() {
         }
     };
 
+    // Función para eliminar un comentario
+    const eliminarComentario = async (comentarioId) => {
+        try {
+            // Hago un DELETE usando el id del comentario
+            const response = await api.delete(
+                `comentarios/${comentarioId}/`
+            );
+
+            // El código 204 indica que se eliminó correctamente
+            if (response.status === 204) {
+                alert("Comentario eliminado correctamente");
+
+                // Vuelvo a cargar la mascota y sus comentarios
+                await fetchMascota();
+            }
+        } catch (error) {
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+
+            if (error.response?.status === 404) {
+                alert("Comentario no encontrado");
+            } else if (error.response?.status === 500) {
+                alert(
+                    "La API tuvo un error interno al eliminar el comentario"
+                );
+            } else {
+                alert("No se pudo eliminar el comentario");
+            }
+        }
+    };
+
     // Se ejecuta cuando entra a la página del detalle
-    useEffect(() => {fetchMascota();}, [id]);
+    useEffect(() => {
+        fetchMascota();
+    }, [id]);
 
     return (
         <main>
@@ -142,6 +171,7 @@ function MascotaDetallePage() {
                     onCambiarEstado={cambiarEstado}
                     onEliminar={eliminarMascota}
                     onAgregarComentario={agregarComentario}
+                    onEliminarComentario={eliminarComentario}
                 />
             ) : (
                 <p>Cargando mascota...</p>

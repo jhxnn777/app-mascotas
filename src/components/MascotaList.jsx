@@ -24,7 +24,7 @@ function MascotaList({ lista }) {
                     </p>
 
                     <p>
-                        Estado: {mascota.estado}
+                        Estado: {mascota.estado === "en_adopcion" ? "En adopcion" : mascota.estado.charAt(0).toUpperCase() + mascota.estado.slice(1)}
                     </p>
 
                     <p>
