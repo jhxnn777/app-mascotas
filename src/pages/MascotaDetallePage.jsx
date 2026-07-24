@@ -32,15 +32,47 @@ function MascotaDetallePage() {
         }
     };
 
+    // Función para cambiar solo el estado de la mascota
+    const cambiarEstado = async (nuevoEstado) => {
+        try {
+            // Uso PATCH porque solo quiero modificar el estado
+            const response = await api.patch(
+                `mascotas/${id}/`,
+                { estado: nuevoEstado }
+            );
+            // Si se actualiza correctamente vuelvo a cargar la mascota
+            if (response.status === 200) {
+                alert("Estado actualizado correctamente");
+                await fetchMascota();
+            }
+
+        } catch (error) {
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+            // Manejo los posibles errores al actualizar
+            if (error.response?.status === 400) {
+                setError("El estado seleccionado no es válido");
+            } else if (error.response?.status === 404) {
+                setError("Mascota no encontrada");
+            } else {
+                setError("No se pudo actualizar el estado");
+            }
+        }
+    };
+
     // Se ejecuta cuando entra a la página del detalle
     useEffect(() => {fetchMascota();}, [id]);
+
     return (
         <main>
             {error ? (
                 <p>{error}</p>
             ) : mascota ? (
-                // Envío la mascota al componente por props
-                <MascotaDetalle mascota={mascota} />
+                // Envío la mascota y la función para cambiar el estado por props
+                <MascotaDetalle
+                    mascota={mascota}
+                    onCambiarEstado={cambiarEstado}
+                />
             ) : (
                 <p>Cargando mascota...</p>
             )}

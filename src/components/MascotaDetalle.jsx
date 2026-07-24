@@ -1,4 +1,13 @@
-function MascotaDetalle({ mascota }) {
+import { useState } from "react";
+
+function MascotaDetalle({ mascota, onCambiarEstado }) {
+    // Guardo el nuevo estado que seleccione el usuario
+    const [nuevoEstado, setNuevoEstado] = useState(mascota.estado);
+    // Envío el nuevo estado al componente padre
+    const handleCambiarEstado = () => {
+        onCambiarEstado(nuevoEstado);
+    };
+
     return (
         <article>
             <h1>{mascota.nombre}</h1>
@@ -51,6 +60,23 @@ function MascotaDetalle({ mascota }) {
                     "No especificado"
                 }
             </p>
+
+            {/* Selecciono el nuevo estado de la mascota */}
+            <h3>Cambiar estado</h3>
+
+            <select
+                value={nuevoEstado}
+                onChange={e => setNuevoEstado(e.target.value)}
+            >
+                <option value="perdida">Perdida</option>
+                <option value="encontrada">Encontrada</option>
+                <option value="en_adopcion">En adopción</option>
+                <option value="adoptada">Adoptada</option>
+            </select>
+
+            <button onClick={handleCambiarEstado}>
+                Actualizar estado
+            </button>
 
             <h2>Comentarios</h2>
             {/* El detalle de la mascota ya trae sus comentarios */}
