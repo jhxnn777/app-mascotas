@@ -1,6 +1,7 @@
 import { useState } from "react";
+import ComentarioForm from "./ComentarioForm";
 
-function MascotaDetalle({ mascota, onCambiarEstado, onEliminar }) {
+function MascotaDetalle({ mascota, onCambiarEstado, onEliminar, onAgregarComentario }) {
     // Guardo el nuevo estado que seleccione el usuario
     const [nuevoEstado, setNuevoEstado] = useState(mascota.estado);
     // Envío el nuevo estado al componente padre
@@ -84,6 +85,11 @@ function MascotaDetalle({ mascota, onCambiarEstado, onEliminar }) {
             </button>
 
             <h2>Comentarios</h2>
+
+            <ComentarioForm
+                onAgregar={onAgregarComentario}
+            />
+            
             {/* El detalle de la mascota ya trae sus comentarios */}
             {mascota.comentarios &&
             mascota.comentarios.length > 0 ? (

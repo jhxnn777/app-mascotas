@@ -95,6 +95,39 @@ function MascotaDetallePage() {
         }
     };
 
+    // Función para agregar un comentario a la mascota
+    const agregarComentario = async (comentario) => {
+        try {
+            // Hago un POST enviando el autor y el contenido
+            const response = await api.post(
+                `mascotas/${id}/comentar/`,
+                comentario
+            );
+
+            // Si se crea correctamente vuelvo a cargar la mascota
+            if (response.status === 201) {
+                alert("Comentario agregado correctamente");
+                await fetchMascota();
+                return true;
+            }
+
+        } catch (error) {
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+
+            // Manejo los posibles errores al agregar el comentario
+            if (error.response?.status === 400) {
+                setError("Revisa los datos del comentario");
+            } else if (error.response?.status === 404) {
+                setError("Mascota no encontrada");
+            } else {
+                setError("No se pudo agregar el comentario");
+            }
+
+            return false;
+        }
+    };
+
     // Se ejecuta cuando entra a la página del detalle
     useEffect(() => {fetchMascota();}, [id]);
 
@@ -108,6 +141,7 @@ function MascotaDetallePage() {
                     mascota={mascota}
                     onCambiarEstado={cambiarEstado}
                     onEliminar={eliminarMascota}
+                    onAgregarComentario={agregarComentario}
                 />
             ) : (
                 <p>Cargando mascota...</p>
