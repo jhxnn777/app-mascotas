@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MascotaDetalle({ mascota, onCambiarEstado }) {
+function MascotaDetalle({ mascota, onCambiarEstado, onEliminar }) {
     // Guardo el nuevo estado que seleccione el usuario
     const [nuevoEstado, setNuevoEstado] = useState(mascota.estado);
     // Envío el nuevo estado al componente padre
@@ -76,6 +76,11 @@ function MascotaDetalle({ mascota, onCambiarEstado }) {
 
             <button onClick={handleCambiarEstado}>
                 Actualizar estado
+            </button>
+
+            {/* boton para eliminar mascota */}
+            <button onClick={onEliminar}>
+                Eliminar mascota
             </button>
 
             <h2>Comentarios</h2>
