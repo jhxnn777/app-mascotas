@@ -17,7 +17,7 @@ function MascotaForm() {
     const [tamano, setTamano] = useState("");
     const [error, setError] = useState("");
 
-    // Aca guardo las opciones que vienen de la API
+    // Acá guardo las opciones de los select que vienen de la API
     const [choices, setChoices] = useState({
         estado: [],
         tipo_animal: [],
@@ -25,39 +25,62 @@ function MascotaForm() {
         tamano: []
     });
 
-    // Obtengo las opciones para llenar los select
-    const fetchChoices = async () => {
-        try {
-            const response = await api.get("choices/");
-            if (response.status === 200) {
-                setChoices(response.data);
-                // Dejo seleccionada la primera opción de cada lista
-                if (response.data.estado.length > 0) {
-                    setEstado(response.data.estado[0].value);
+    // Cargo las opciones cuando se abre el formulario
+    useEffect(() => {
+        let activo = true;
+        // Hago un GET al endpoint choices
+        api.get("choices/")
+            .then(response => {
+                if (!activo) {
+                    return;
                 }
-                if (response.data.tipo_animal.length > 0) {
-                    setTipoAnimal(response.data.tipo_animal[0].value);
+
+                if (response.status === 200) {
+                    setChoices(response.data);
+
+                    // Dejo seleccionada la primera opción de cada lista
+                    if (response.data.estado.length > 0) {
+                        setEstado(response.data.estado[0].value);
+                    }
+
+                    if (response.data.tipo_animal.length > 0) {
+                        setTipoAnimal(
+                            response.data.tipo_animal[0].value
+                        );
+                    }
+
+                    if (response.data.sexo.length > 0) {
+                        setSexo(response.data.sexo[0].value);
+                    }
+
+                    if (response.data.tamano.length > 0) {
+                        setTamano(response.data.tamano[0].value);
+                    }
                 }
-                if (response.data.sexo.length > 0) {
-                    setSexo(response.data.sexo[0].value);
+            })
+            .catch(error => {
+                console.log(error.response?.status);
+                console.log(error.response?.data);
+
+                if (activo) {
+                    setError(
+                        "No se pudieron cargar las opciones del formulario"
+                    );
                 }
-                if (response.data.tamano.length > 0) {
-                    setTamano(response.data.tamano[0].value);
-                }
-            }
-        } catch (error) {
-            console.log(error.response?.status);
-            console.log(error.response?.data);
-            setError("No se pudieron cargar las opciones");
-        }
-    };
+            });
+
+        // Evita actualizar estados si salgo del formulario
+        return () => {
+            activo = false;
+        };
+    }, []);
 
     // Esta función se ejecuta cuando envío el formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
-        // Validaciones básicas antes de enviar los datos
+        // Validaciones antes de enviar los datos
         if (nombre.trim() === "") {
             setError("El nombre es obligatorio");
             return;
@@ -73,7 +96,7 @@ function MascotaForm() {
             return;
         }
 
-        // Uso FormData porque voy a enviar datos y una imagen
+        // Uso FormData porque envío datos junto con una imagen
         const formData = new FormData();
 
         formData.append("nombre", nombre);
@@ -94,10 +117,12 @@ function MascotaForm() {
         }
 
         try {
-            // Envío los datos a la API usando POST
-            const response = await api.post("mascotas/", formData);
+            // Hago un POST para registrar la mascota
+            const response = await api.post(
+                "mascotas/",
+                formData
+            );
 
-            // Si se crea correctamente vuelvo al listado
             if (response.status === 201) {
                 alert("Mascota registrada correctamente");
                 navigate("/");
@@ -106,7 +131,6 @@ function MascotaForm() {
             console.log(error.response?.status);
             console.log(error.response?.data);
 
-            // Manejo los errores de la API
             if (error.response?.status === 400) {
                 setError("Revisa los datos ingresados");
             } else {
@@ -114,11 +138,6 @@ function MascotaForm() {
             }
         }
     };
-
-    // Cargo las opciones cuando se abre el formulario
-    useEffect(() => {
-        fetchChoices();
-    }, []);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -155,7 +174,10 @@ function MascotaForm() {
                     onChange={e => setEstado(e.target.value)}
                 >
                     {choices.estado.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>
+                        <option
+                            key={opcion.value}
+                            value={opcion.value}
+                        >
                             {opcion.label}
                         </option>
                     ))}
@@ -169,7 +191,10 @@ function MascotaForm() {
                     onChange={e => setTipoAnimal(e.target.value)}
                 >
                     {choices.tipo_animal.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>
+                        <option
+                            key={opcion.value}
+                            value={opcion.value}
+                        >
                             {opcion.label}
                         </option>
                     ))}
@@ -202,7 +227,10 @@ function MascotaForm() {
                     onChange={e => setSexo(e.target.value)}
                 >
                     {choices.sexo.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>
+                        <option
+                            key={opcion.value}
+                            value={opcion.value}
+                        >
                             {opcion.label}
                         </option>
                     ))}
@@ -216,7 +244,10 @@ function MascotaForm() {
                     onChange={e => setTamano(e.target.value)}
                 >
                     {choices.tamano.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>
+                        <option
+                            key={opcion.value}
+                            value={opcion.value}
+                        >
                             {opcion.label}
                         </option>
                     ))}
@@ -224,6 +255,7 @@ function MascotaForm() {
             </div>
 
             {error && <p>{error}</p>}
+
             <button type="submit">
                 Registrar Mascota
             </button>
