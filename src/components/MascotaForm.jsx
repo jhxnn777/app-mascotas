@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import notyf from "../utils/notificaciones";
 
 function MascotaForm() {
     const navigate = useNavigate();
@@ -125,7 +126,7 @@ function MascotaForm() {
             );
 
             if (response.status === 201) {
-                alert("Mascota registrada correctamente");
+                notyf.success("Mascota registrada correctamente");
                 navigate("/");
             }
         } catch (error) {

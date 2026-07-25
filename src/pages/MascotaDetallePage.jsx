@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MascotaDetalle from "../components/MascotaDetalle";
 import api from "../api/api";
+import notyf from "../utils/notificaciones";
 
 function MascotaDetallePage() {
     // Obtengo el id de la mascota desde la URL
@@ -39,18 +40,18 @@ function MascotaDetallePage() {
                 { estado: nuevoEstado }
             );
             if (response.status === 200) {
-                alert("Estado actualizado correctamente");
+                notyf.success("Estado actualizado correctamente");
                 await fetchMascota();
             }
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
             if (error.response?.status === 400) {
-                setError("El estado seleccionado no es válido");
+                notyf.error("El estado seleccionado no es válido");
             } else if (error.response?.status === 404) {
-                setError("Mascota no encontrada");
+                notyf.error("Mascota no encontrada");
             } else {
-                setError("No se pudo actualizar el estado");
+                notyf.error("No se pudo actualizar el estado");
             }
         }
     };
@@ -62,16 +63,16 @@ function MascotaDetallePage() {
                 `mascotas/${id}/`
             );
             if (response.status === 204) {
-                alert("Mascota eliminada correctamente");
+                notyf.success("Mascota eliminada correctamente");
                 navigate("/");
             }
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
             if (error.response?.status === 404) {
-                setError("Mascota no encontrada");
+                notyf.error("Mascota no encontrada");
             } else {
-                setError("No se pudo eliminar la mascota");
+                notyf.error("No se pudo eliminar la mascota");
             }
         }
     };
@@ -84,7 +85,7 @@ function MascotaDetallePage() {
                 comentario
             );
             if (response.status === 201) {
-                alert("Comentario agregado correctamente");
+                notyf.success("Comentario agregado correctamente");
                 await fetchMascota();
                 return true;
             }
@@ -93,11 +94,11 @@ function MascotaDetallePage() {
             console.log(error.response?.status);
             console.log(error.response?.data);
             if (error.response?.status === 400) {
-                setError("Revisa los datos del comentario");
+                notyf.error("Revisa los datos del comentario");
             } else if (error.response?.status === 404) {
-                setError("Mascota no encontrada");
+                notyf.error("Mascota no encontrada");
             } else {
-                setError("No se pudo agregar el comentario");
+                notyf.error("No se pudo agregar el comentario");
             }
             return false;
         }
@@ -110,20 +111,20 @@ function MascotaDetallePage() {
                 `comentarios/${comentarioId}/`
             );
             if (response.status === 204) {
-                alert("Comentario eliminado correctamente");
+                notyf.success("Comentario eliminado correctamente");
                 await fetchMascota();
             }
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
             if (error.response?.status === 404) {
-                alert("Comentario no encontrado");
+                notyf.error("Comentario no encontrado");
             } else if (error.response?.status === 500) {
-                alert(
+                notyf.error(
                     "La API tuvo un error interno al eliminar el comentario"
                 );
             } else {
-                alert("No se pudo eliminar el comentario");
+                notyf.error("No se pudo eliminar el comentario");
             }
         }
     };
