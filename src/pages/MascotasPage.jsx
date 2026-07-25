@@ -5,10 +5,8 @@ import api from "../api/api";
 function MascotasPage() {
     // Acá guardo la lista de mascotas que viene de la API
     const [mascotas, setMascotas] = useState([]);
-
     // Acá guardo un mensaje si ocurre algún error
     const [error, setError] = useState("");
-
     // Se ejecuta una vez cuando se carga la página
     useEffect(() => {
         let activo = true;
