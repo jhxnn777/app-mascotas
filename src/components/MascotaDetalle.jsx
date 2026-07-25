@@ -10,143 +10,252 @@ function MascotaDetalle({
 }) {
     // Guardo el nuevo estado que seleccione el usuario
     const [nuevoEstado, setNuevoEstado] = useState(mascota.estado);
-
     // Envío el nuevo estado al componente padre
     const handleCambiarEstado = () => {
         onCambiarEstado(nuevoEstado);
+    }
+    // Muestro el estado sin guion bajo
+    const mostrarEstado = (estado) => {
+        if (estado === "en_adopcion") {
+            return "En adopción";
+        }
+        return estado.charAt(0).toUpperCase() + estado.slice(1);
+    };
+
+    // Cambio el color de la etiqueta según el estado
+    const colorEstado = (estado) => {
+        if (estado === "perdida") {
+            return "text-bg-danger";
+        }
+
+        if (estado === "encontrada") {
+            return "text-bg-warning";
+        }
+
+        if (estado === "en_adopcion") {
+            return "text-bg-primary";
+        }
+
+        if (estado === "adoptada") {
+            return "text-bg-success";
+        }
+
+        return "text-bg-secondary";
     };
 
     return (
-        <article>
-            <h1>{mascota.nombre}</h1>
-
-            {/* Muestro la imagen si existe */}
-            {mascota.imagen && (
-                <img
-                    src={mascota.imagen}
-                    alt={mascota.nombre}
-                    width="300"
-                />
-            )}
-
-            <p>
-                Descripción: {mascota.descripcion}
-            </p>
-
-            <p>
-                Estado: {mascota.estado === "en_adopcion"
-                    ? "En adopción"
-                    :   mascota.estado.charAt(0).toUpperCase() +
-                        mascota.estado.slice(1)
-                }
-            </p>
-
-            <p>
-                Tipo animal: {mascota.tipo_animal}
-            </p>
-
-            <p>
-                Edad: {
-                    mascota.edad !== null
-                        ? mascota.edad
-                        : "No especificada"
-                }
-            </p>
-
-            <p>
-                Raza: {
-                    mascota.raza ||
-                    "No especificada"
-                }
-            </p>
-
-            <p>
-                Sexo: {
-                    mascota.sexo ||
-                    "No especificado"
-                }
-            </p>
-
-            <p>
-                Tamaño: {
-                    mascota.tamano ||
-                    "No especificado"
-                }
-            </p>
-
-            {/* Selecciono el nuevo estado de la mascota */}
-            <h3>Cambiar estado</h3>
-
-            <select
-                value={nuevoEstado}
-                onChange={e => setNuevoEstado(e.target.value)}
-            >
-                <option value="perdida">
-                    Perdida
-                </option>
-
-                <option value="encontrada">
-                    Encontrada
-                </option>
-
-                <option value="en_adopcion">
-                    En adopción
-                </option>
-
-                <option value="adoptada">
-                    Adoptada
-                </option>
-            </select>
-
-            {/* Envío el nuevo estado seleccionado */}
-            <button onClick={handleCambiarEstado}>
-                Actualizar estado
-            </button>
-
-            {/* Ejecuto la función para eliminar la mascota */}
-            <button onClick={onEliminar}>
-                Eliminar mascota
-            </button>
-
-            <h2>Comentarios</h2>
-
-            {/* Formulario para agregar un comentario */}
-            <ComentarioForm
-                onAgregar={onAgregarComentario}
-            />
-
-            {/* El detalle de la mascota ya trae sus comentarios */}
-            {mascota.comentarios &&
-            mascota.comentarios.length > 0 ? (
-                mascota.comentarios.map(comentario => (
-                    <div key={comentario.id}>
-                        <p>
-                            <strong>Autor:</strong>{" "}
-                            {comentario.autor}
-                        </p>
-
-                        <p>
-                            <strong>Comentario:</strong>{" "}
-                            {comentario.contenido}
-                        </p>
-
-                        {/* Envío el id del comentario que quiero eliminar */}
-                        <button
-                            onClick={() =>
-                                onEliminarComentario(comentario.id)
-                            }
-                        >
-                            Eliminar comentario
-                        </button>
-
-                        <hr />
+        <article className="detalle-mascota">
+            <div className="card border-0 shadow detalle-card">
+                <div className="row g-0">
+                    <div className="col-12 col-lg-5">
+                        {mascota.imagen ? (
+                            <img
+                                src={mascota.imagen}
+                                alt={mascota.nombre}
+                                className="imagen-detalle"
+                            />
+                        ) : (
+                            <div className="sin-imagen detalle-sin-imagen">
+                                🐾
+                            </div>
+                        )}
                     </div>
-                ))
-            ) : (
-                <p>
-                    Esta mascota no tiene comentarios
-                </p>
-            )}
+
+                    <div className="col-12 col-lg-7">
+                        <div className="card-body p-4">
+                            <div className="d-flex justify-content-between align-items-start gap-3 mb-4">
+                                <h1 className="mb-0">
+                                    {mascota.nombre}
+                                </h1>
+
+                                <span
+                                    className={`badge ${colorEstado(
+                                        mascota.estado
+                                    )}`}
+                                >
+                                    {mostrarEstado(mascota.estado)}
+                                </span>
+                            </div>
+
+                            <p className="text-secondary">
+                                {mascota.descripcion}
+                            </p>
+
+                            <div className="row g-3 informacion-mascota">
+                                <div className="col-6">
+                                    <div className="dato-mascota">
+                                        <span>Tipo</span>
+                                        <strong>
+                                            {mascota.tipo_animal}
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <div className="col-6">
+                                    <div className="dato-mascota">
+                                        <span>Edad</span>
+                                        <strong>
+                                            {mascota.edad !== null
+                                                ? `${mascota.edad} año(s)`
+                                                : "No especificada"}
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <div className="col-6">
+                                    <div className="dato-mascota">
+                                        <span>Raza</span>
+                                        <strong>
+                                            {mascota.raza ||
+                                                "No especificada"}
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <div className="col-6">
+                                    <div className="dato-mascota">
+                                        <span>Sexo</span>
+                                        <strong>
+                                            {mascota.sexo ||
+                                                "No especificado"}
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <div className="col-6">
+                                    <div className="dato-mascota">
+                                        <span>Tamaño</span>
+                                        <strong>
+                                            {mascota.tamano ||
+                                                "No especificado"}
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <div className="col-6">
+                                    <div className="dato-mascota">
+                                        <span>Estado actual</span>
+                                        <strong>
+                                            {mostrarEstado(
+                                                mascota.estado
+                                            )}
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr className="my-4" />
+
+                            <h2 className="fs-5 mb-3">
+                                Cambiar estado
+                            </h2>
+
+                            <div className="d-flex flex-column flex-md-row gap-2">
+                                <select
+                                    className="form-select"
+                                    value={nuevoEstado}
+                                    onChange={e =>
+                                        setNuevoEstado(
+                                            e.target.value
+                                        )
+                                    }
+                                >
+                                    <option value="perdida">
+                                        Perdida
+                                    </option>
+
+                                    <option value="encontrada">
+                                        Encontrada
+                                    </option>
+
+                                    <option value="en_adopcion">
+                                        En adopción
+                                    </option>
+
+                                    <option value="adoptada">
+                                        Adoptada
+                                    </option>
+                                </select>
+
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={handleCambiarEstado}
+                                >
+                                    Actualizar estado
+                                </button>
+                            </div>
+
+                            <button
+                                className="btn btn-outline-danger mt-3"
+                                onClick={onEliminar}
+                            >
+                                Eliminar mascota
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section className="comentarios-seccion mt-4">
+                <div className="card border-0 shadow-sm p-4">
+                    <h2 className="mb-4">
+                        Comentarios
+                    </h2>
+
+                    <ComentarioForm
+                        onAgregar={onAgregarComentario}
+                    />
+
+                    <hr className="my-4" />
+
+                    {mascota.comentarios &&
+                    mascota.comentarios.length > 0 ? (
+                        <div className="lista-comentarios">
+                            {mascota.comentarios.map(
+                                comentario => (
+                                    <div
+                                        className="comentario-card"
+                                        key={comentario.id}
+                                    >
+                                        <div className="d-flex justify-content-between align-items-start gap-3">
+                                            <div>
+                                                <p className="mb-1">
+                                                    <strong>
+                                                        {
+                                                            comentario.autor
+                                                        }
+                                                    </strong>
+                                                </p>
+
+                                                <p className="mb-0 text-secondary">
+                                                    {
+                                                        comentario.contenido
+                                                    }
+                                                </p>
+                                            </div>
+
+                                            <button
+                                                className="btn btn-sm btn-outline-danger"
+                                                onClick={() =>
+                                                    onEliminarComentario(
+                                                        comentario.id
+                                                    )
+                                                }
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    ) : (
+                        <div className="alert alert-info mb-0">
+                            Esta mascota todavía no tiene comentarios.
+                        </div>
+                    )}
+                </div>
+            </section>
         </article>
     );
 }
