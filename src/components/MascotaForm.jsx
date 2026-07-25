@@ -17,7 +17,7 @@ function MascotaForm() {
     const [tamano, setTamano] = useState("");
     const [error, setError] = useState("");
 
-    // Acá guardo las opciones de los select que vienen de la API
+    // Aca guardo las opciones de los select que vienen de la API
     const [choices, setChoices] = useState({
         estado: [],
         tipo_animal: [],
@@ -28,6 +28,7 @@ function MascotaForm() {
     // Cargo las opciones cuando se abre el formulario
     useEffect(() => {
         let activo = true;
+
         // Hago un GET al endpoint choices
         api.get("choices/")
             .then(response => {
@@ -140,126 +141,219 @@ function MascotaForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Nombre:</label>
-                <input
-                    type="text"
-                    value={nombre}
-                    onChange={e => setNombre(e.target.value)}
-                />
+        <section className="formulario-mascota">
+            <div className="card border-0 shadow-sm formulario-card">
+                <div className="card-body p-4 p-md-5">
+                    <div className="mb-4">
+                        <h2 className="fs-4 mb-2">
+                            Datos de la mascota
+                        </h2>
+
+                        <p className="text-secondary mb-0">
+                            Completa los campos para registrar una nueva mascota.
+                        </p>
+                    </div>
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="row g-4">
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Nombre
+                                </label>
+
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ejemplo: Firulais"
+                                    value={nombre}
+                                    onChange={e =>
+                                        setNombre(e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Tipo de animal
+                                </label>
+
+                                <select
+                                    className="form-select"
+                                    value={tipoAnimal}
+                                    onChange={e =>
+                                        setTipoAnimal(e.target.value)
+                                    }
+                                >
+                                    {choices.tipo_animal.map(opcion => (
+                                        <option
+                                            key={opcion.value}
+                                            value={opcion.value}
+                                        >
+                                            {opcion.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="col-12">
+                                <label className="form-label fw-semibold">
+                                    Descripción
+                                </label>
+
+                                <textarea
+                                    className="form-control"
+                                    rows="4"
+                                    placeholder="Describe las características de la mascota"
+                                    value={descripcion}
+                                    onChange={e =>
+                                        setDescripcion(e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="col-12">
+                                <label className="form-label fw-semibold">
+                                    Imagen
+                                </label>
+
+                                <input
+                                    className="form-control"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={e =>
+                                        setImagen(e.target.files[0])
+                                    }
+                                />
+
+                                <div className="form-text">
+                                    Selecciona una imagen desde tu computador.
+                                </div>
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Estado
+                                </label>
+
+                                <select
+                                    className="form-select"
+                                    value={estado}
+                                    onChange={e =>
+                                        setEstado(e.target.value)
+                                    }
+                                >
+                                    {choices.estado.map(opcion => (
+                                        <option
+                                            key={opcion.value}
+                                            value={opcion.value}
+                                        >
+                                            {opcion.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Edad
+                                </label>
+
+                                <input
+                                    className="form-control"
+                                    type="number"
+                                    min="0"
+                                    placeholder="Ejemplo: 3"
+                                    value={edad}
+                                    onChange={e =>
+                                        setEdad(e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Raza
+                                </label>
+
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ejemplo: Labrador"
+                                    value={raza}
+                                    onChange={e =>
+                                        setRaza(e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Sexo
+                                </label>
+
+                                <select
+                                    className="form-select"
+                                    value={sexo}
+                                    onChange={e =>
+                                        setSexo(e.target.value)
+                                    }
+                                >
+                                    {choices.sexo.map(opcion => (
+                                        <option
+                                            key={opcion.value}
+                                            value={opcion.value}
+                                        >
+                                            {opcion.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label className="form-label fw-semibold">
+                                    Tamaño
+                                </label>
+
+                                <select
+                                    className="form-select"
+                                    value={tamano}
+                                    onChange={e =>
+                                        setTamano(e.target.value)
+                                    }
+                                >
+                                    {choices.tamano.map(opcion => (
+                                        <option
+                                            key={opcion.value}
+                                            value={opcion.value}
+                                        >
+                                            {opcion.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {error && (
+                            <div
+                                className="alert alert-danger mt-4"
+                                role="alert"
+                            >
+                                {error}
+                            </div>
+                        )}
+
+                        <div className="d-grid d-md-flex justify-content-md-end mt-4">
+                            <button
+                                className="btn btn-primary btn-lg px-5"
+                                type="submit"
+                            >
+                                Registrar mascota
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div>
-                <label>Descripción:</label>
-                <textarea
-                    value={descripcion}
-                    onChange={e => setDescripcion(e.target.value)}
-                />
-            </div>
-
-            <div>
-                <label>Imagen:</label>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={e => setImagen(e.target.files[0])}
-                />
-            </div>
-
-            <div>
-                <label>Estado:</label>
-                <select
-                    value={estado}
-                    onChange={e => setEstado(e.target.value)}
-                >
-                    {choices.estado.map(opcion => (
-                        <option
-                            key={opcion.value}
-                            value={opcion.value}
-                        >
-                            {opcion.label}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div>
-                <label>Tipo animal:</label>
-                <select
-                    value={tipoAnimal}
-                    onChange={e => setTipoAnimal(e.target.value)}
-                >
-                    {choices.tipo_animal.map(opcion => (
-                        <option
-                            key={opcion.value}
-                            value={opcion.value}
-                        >
-                            {opcion.label}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div>
-                <label>Edad:</label>
-                <input
-                    type="number"
-                    min="0"
-                    value={edad}
-                    onChange={e => setEdad(e.target.value)}
-                />
-            </div>
-
-            <div>
-                <label>Raza:</label>
-                <input
-                    type="text"
-                    value={raza}
-                    onChange={e => setRaza(e.target.value)}
-                />
-            </div>
-
-            <div>
-                <label>Sexo:</label>
-                <select
-                    value={sexo}
-                    onChange={e => setSexo(e.target.value)}
-                >
-                    {choices.sexo.map(opcion => (
-                        <option
-                            key={opcion.value}
-                            value={opcion.value}
-                        >
-                            {opcion.label}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div>
-                <label>Tamaño:</label>
-                <select
-                    value={tamano}
-                    onChange={e => setTamano(e.target.value)}
-                >
-                    {choices.tamano.map(opcion => (
-                        <option
-                            key={opcion.value}
-                            value={opcion.value}
-                        >
-                            {opcion.label}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            {error && <p>{error}</p>}
-
-            <button type="submit">
-                Registrar Mascota
-            </button>
-        </form>
+        </section>
     );
 }
 

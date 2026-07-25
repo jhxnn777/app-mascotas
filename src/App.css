@@ -146,3 +146,49 @@ body {
     flex-direction: column;
   }
 }
+
+.formulario-mascota {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.formulario-card {
+  border-radius: 18px;
+}
+
+.formulario-card .form-control,
+.formulario-card .form-select {
+  min-height: 48px;
+  border-radius: 10px;
+  border-color: #d9dee5;
+}
+
+.formulario-card textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.formulario-card .form-control:focus,
+.formulario-card .form-select:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.15);
+}
+
+.formulario-card .btn-primary {
+  border: none;
+  background-color: #6f42c1;
+}
+
+.formulario-card .btn-primary:hover {
+  background-color: #59359b;
+}
+
+@media (max-width: 576px) {
+  .formulario-card .card-body {
+    padding: 24px !important;
+  }
+
+  .formulario-card .btn {
+    width: 100%;
+  }
+}
