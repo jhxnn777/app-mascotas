@@ -35,30 +35,61 @@ function ComentarioForm({ onAgregar }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>Agregar comentario</h3>
+        <form
+            className="formulario-comentario"
+            onSubmit={handleSubmit}
+        >
+            <h3 className="fs-5 mb-3">
+                Agregar comentario
+            </h3>
 
-            <div>
-                <label>Autor:</label>
-                <input
-                    type="text"
-                    value={autor}
-                    onChange={e => setAutor(e.target.value)}
-                />
+            <div className="row g-3">
+                <div className="col-12 col-md-4">
+                    <label className="form-label fw-semibold">
+                        Autor
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="text"
+                        placeholder="Ingresa tu nombre"
+                        value={autor}
+                        onChange={e => setAutor(e.target.value)}
+                    />
+                </div>
+
+                <div className="col-12 col-md-8">
+                    <label className="form-label fw-semibold">
+                        Comentario
+                    </label>
+
+                    <textarea
+                        className="form-control"
+                        rows="3"
+                        placeholder="Escribe un comentario"
+                        value={contenido}
+                        onChange={e => setContenido(e.target.value)}
+                    />
+                </div>
             </div>
 
-            <div>
-                <label>Comentario:</label>
-                <textarea
-                    value={contenido}
-                    onChange={e => setContenido(e.target.value)}
-                />
+            {error && (
+                <div
+                    className="alert alert-danger mt-3 mb-0"
+                    role="alert"
+                >
+                    {error}
+                </div>
+            )}
+
+            <div className="d-flex justify-content-end mt-3">
+                <button
+                    className="btn btn-primary px-4"
+                    type="submit"
+                >
+                    Comentar
+                </button>
             </div>
-            
-            {error && <p>{error}</p>}
-            <button type="submit">
-                Comentar
-            </button>
         </form>
     );
 }

@@ -192,3 +192,26 @@ body {
     width: 100%;
   }
 }
+
+.formulario-comentario .form-control {
+  border-radius: 10px;
+  border-color: #d9dee5;
+}
+
+.formulario-comentario .form-control:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.15);
+}
+
+.formulario-comentario textarea {
+  resize: vertical;
+}
+
+.formulario-comentario .btn-primary {
+  border: none;
+  background-color: #6f42c1;
+}
+
+.formulario-comentario .btn-primary:hover {
+  background-color: #59359b;
+}
