@@ -1,122 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { NavLink, Routes, Route } from "react-router-dom";
+import { PawPrint, House, PlusCircle } from "lucide-react";
+import MascotasPage from "./pages/MascotasPage";
+import CrearMascotaPage from "./pages/CrearMascotaPage";
+import MascotaDetallePage from "./pages/MascotaDetallePage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app">
+      <header>
+        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
+          <div className="container">
+            <NavLink
+              className="navbar-brand fw-bold text-dark d-flex align-items-center gap-2"
+              to="/"
+            >
+              <PawPrint size={24} />
+              MascotasApp
+            </NavLink>
 
-      <div className="ticks"></div>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#menuPrincipal"
+              aria-controls="menuPrincipal"
+              aria-expanded="false"
+              aria-label="Abrir menú"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <div
+              className="collapse navbar-collapse"
+              id="menuPrincipal"
+            >
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link enlace-activo fw-bold d-flex align-items-center gap-2"
+                        : "nav-link text-dark d-flex align-items-center gap-2"
+                    }
+                  >
+                    <House size={18} />
+                    Mascotas
+                  </NavLink>
+                </li>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+                <li className="nav-item">
+                  <NavLink
+                    to="/crear"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link enlace-activo fw-bold d-flex align-items-center gap-2"
+                        : "nav-link text-dark d-flex align-items-center gap-2"
+                    }
+                  >
+                    <PlusCircle size={18} />
+                    Registrar Mascota
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <div className="container py-4 contenido-principal">
+        <Routes>
+          <Route path="/" element={<MascotasPage />} />
+          <Route path="/crear" element={<CrearMascotaPage />} />
+          <Route
+            path="/mascotas/:id"
+            element={<MascotaDetallePage />}
+          />
+        </Routes>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
