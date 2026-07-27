@@ -215,3 +215,55 @@ body {
 .formulario-comentario .btn-primary:hover {
   background-color: #59359b;
 }
+
+.contador-card {
+  height: 100%;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #e4e7eb;
+  border-left: 5px solid;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.contador-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contador-card span {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.contador-card strong {
+  color: #212529;
+  font-size: 1.8rem;
+}
+
+.contador-total {
+  border-left-color: #6f42c1;
+}
+
+.contador-perdidas {
+  border-left-color: #dc3545;
+}
+
+.contador-encontradas {
+  border-left-color: #ffc107;
+}
+
+.contador-adopcion {
+  border-left-color: #0d6efd;
+}
+
+.contador-adoptadas {
+  border-left-color: #198754;
+}

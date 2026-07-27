@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MascotaList from "../components/MascotaList";
+import ContadoresMascotas from "../components/ContadoresMascotas";
 import api from "../api/api";
 
 function MascotasPage() {
@@ -45,6 +46,8 @@ function MascotasPage() {
             <div className="text-center mb-4">
                 <h1 className="mb-2">Mascotas registradas</h1>
             </div>
+
+            <ContadoresMascotas mascotas={mascotas} />
 
             {error ? (
                 <div className="alert alert-danger">
