@@ -267,3 +267,23 @@ body {
 .contador-adoptadas {
   border-left-color: #198754;
 }
+
+.contador-total svg {
+  color: #6f42c1;
+}
+
+.contador-perdidas svg {
+  color: #dc3545;
+}
+
+.contador-encontradas svg {
+  color: #ffc107;
+}
+
+.contador-adopcion svg {
+  color: #0d6efd;
+}
+
+.contador-adoptadas svg {
+  color: #198754;
+}
