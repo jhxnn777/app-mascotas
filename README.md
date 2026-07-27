@@ -15,8 +15,12 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-
+t 
 ## uso de IA
 
-Para el proyecto use chatgpt como apoyo en algunas partes donde tenia dudas. Me ayudo principalmente a entender mejor como organizar los componentes y las paginas de react, como usar formdata para enviar la imagen, como manejar algunos errores a la api y tambien a corregir problemas q aparecian al ejecutar el Eslint
+Para el proyecto use chatgpt y copilot como apoyo en algunas partes donde tenia dudas. Me ayudo principalmente a entender  como usar formdata para enviar la imagen, como manejar algunos errores a la api y tambien a corregir problemas q aparecian al ejecutar el Eslint
 Tambien lo use para revisar algunos codigos y entender mejor q hacia cada parte, pero no se copio directamente, fui probando los cambios y revisando q las funciones de  crear, listar, actualizar, y eliminar siguieran funcionandio correctamente.
+Tambien lo use como apoyo para resolver algunas dudas relacionadas con la interfaz, especialmente en el uso de boostrap, las notificaciones con notyf, los iconos de lucide, los contadores de mascotas por estado y el modal de confirmas para eliminar.
+
+
+
