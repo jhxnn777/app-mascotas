@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Eye } from "lucide-react";
 
 function MascotaList({ lista }) {
     // Cambio el texto interno de la API por uno más bonito
@@ -94,8 +95,9 @@ function MascotaList({ lista }) {
 
                             <Link
                                 to={`/mascotas/${mascota.id}`}
-                                className="btn btn-outline-primary mt-auto"
+                                className="btn btn-outline-primary mt-auto d-flex align-items-center justify-content-center gap-2"
                             >
+                                <Eye size={18} />
                                 Ver detalle
                             </Link>
                         </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Send } from "lucide-react";
 
 function ComentarioForm({ onAgregar }) {
     // Guardo los datos ingresados en el formulario
@@ -84,9 +85,10 @@ function ComentarioForm({ onAgregar }) {
 
             <div className="d-flex justify-content-end mt-3">
                 <button
-                    className="btn btn-primary px-4"
+                    className="btn btn-primary px-4 d-flex align-items-center gap-2"
                     type="submit"
                 >
+                    <Send size={17} />
                     Comentar
                 </button>
             </div>

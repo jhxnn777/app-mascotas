@@ -1,4 +1,5 @@
 import { NavLink, Routes, Route } from "react-router-dom";
+import { PawPrint, House, PlusCircle } from "lucide-react";
 import MascotasPage from "./pages/MascotasPage";
 import CrearMascotaPage from "./pages/CrearMascotaPage";
 import MascotaDetallePage from "./pages/MascotaDetallePage";
@@ -9,8 +10,12 @@ function App() {
       <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
           <div className="container">
-            <NavLink className="navbar-brand fw-bold text-dark" to="/">
-              🐾 MascotasApp
+            <NavLink
+              className="navbar-brand fw-bold text-dark d-flex align-items-center gap-2"
+              to="/"
+            >
+              <PawPrint size={24} />
+              MascotasApp
             </NavLink>
 
             <button
@@ -35,10 +40,11 @@ function App() {
                     to="/"
                     className={({ isActive }) =>
                       isActive
-                        ? "nav-link enlace-activo fw-bold"
-                        : "nav-link text-dark"
+                        ? "nav-link enlace-activo fw-bold d-flex align-items-center gap-2"
+                        : "nav-link text-dark d-flex align-items-center gap-2"
                     }
                   >
+                    <House size={18} />
                     Mascotas
                   </NavLink>
                 </li>
@@ -48,10 +54,11 @@ function App() {
                     to="/crear"
                     className={({ isActive }) =>
                       isActive
-                        ? "nav-link enlace-activo fw-bold"
-                        : "nav-link text-dark"
+                        ? "nav-link enlace-activo fw-bold d-flex align-items-center gap-2"
+                        : "nav-link text-dark d-flex align-items-center gap-2"
                     }
                   >
+                    <PlusCircle size={18} />
                     Registrar Mascota
                   </NavLink>
                 </li>

@@ -1,4 +1,10 @@
 import { useState } from "react";
+import {
+    RefreshCw,
+    Trash2,
+    MessageCircle,
+    TriangleAlert
+} from "lucide-react";
 import ComentarioForm from "./ComentarioForm";
 
 function MascotaDetalle({
@@ -207,17 +213,19 @@ function MascotaDetalle({
                                 </select>
 
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-primary d-flex align-items-center justify-content-center gap-2"
                                     onClick={handleCambiarEstado}
                                 >
+                                    <RefreshCw size={18} />
                                     Actualizar estado
                                 </button>
                             </div>
 
                             <button
-                                className="btn btn-outline-danger mt-3"
+                                className="btn btn-outline-danger mt-3 d-flex align-items-center gap-2"
                                 onClick={handleEliminarMascota}
                             >
+                                <Trash2 size={18} />
                                 Eliminar mascota
                             </button>
                         </div>
@@ -227,7 +235,8 @@ function MascotaDetalle({
 
             <section className="comentarios-seccion mt-4">
                 <div className="card border-0 shadow-sm p-4">
-                    <h2 className="mb-4">
+                    <h2 className="mb-4 d-flex align-items-center gap-2">
+                        <MessageCircle size={26} />
                         Comentarios
                     </h2>
 
@@ -264,13 +273,14 @@ function MascotaDetalle({
                                             </div>
 
                                             <button
-                                                className="btn btn-sm btn-outline-danger"
+                                                className="btn btn-sm btn-outline-danger d-flex align-items-center gap-2"
                                                 onClick={() =>
                                                     handleEliminarComentario(
                                                         comentario.id
                                                     )
                                                 }
                                             >
+                                                <Trash2 size={15} />
                                                 Eliminar
                                             </button>
                                         </div>
@@ -295,7 +305,8 @@ function MascotaDetalle({
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content border-0 shadow">
                                 <div className="modal-header">
-                                    <h2 className="modal-title fs-5">
+                                    <h2 className="modal-title fs-5 d-flex align-items-center gap-2">
+                                        <TriangleAlert size={21} />
                                         Confirmar eliminación
                                     </h2>
                                     <button
@@ -323,9 +334,10 @@ function MascotaDetalle({
                                     </button>
                                     <button
                                         type="button"
-                                        className="btn btn-danger"
+                                        className="btn btn-danger d-flex align-items-center gap-2"
                                         onClick={confirmarEliminacion}
                                     >
+                                        <Trash2 size={17} />
                                         Sí, eliminar
                                     </button>
                                 </div>
