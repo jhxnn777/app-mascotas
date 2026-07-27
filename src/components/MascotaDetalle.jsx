@@ -10,10 +10,41 @@ function MascotaDetalle({
 }) {
     // Guardo el nuevo estado que seleccione el usuario
     const [nuevoEstado, setNuevoEstado] = useState(mascota.estado);
+    // Guardo la información para mostrar la confirmación
+    const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+    const [tipoEliminar, setTipoEliminar] = useState("");
+    const [comentarioId, setComentarioId] = useState(null);
     // Envío el nuevo estado al componente padre
     const handleCambiarEstado = () => {
         onCambiarEstado(nuevoEstado);
     }
+    // Abro la confirmación para eliminar la mascota
+    const handleEliminarMascota = () => {
+        setTipoEliminar("mascota");
+        setMostrarConfirmacion(true);
+    };
+    // Abro la confirmación para eliminar un comentario
+    const handleEliminarComentario = (id) => {
+        setTipoEliminar("comentario");
+        setComentarioId(id);
+        setMostrarConfirmacion(true);
+    };
+    // Cierro la confirmación sin eliminar
+    const cerrarConfirmacion = () => {
+        setMostrarConfirmacion(false);
+        setTipoEliminar("");
+        setComentarioId(null);
+    };
+    // Ejecuto la eliminación después de confirmar
+    const confirmarEliminacion = () => {
+        if (tipoEliminar === "mascota") {
+            onEliminar();
+        }
+        if (tipoEliminar === "comentario") {
+            onEliminarComentario(comentarioId);
+        }
+        cerrarConfirmacion();
+    };
     // Muestro el estado sin guion bajo
     const mostrarEstado = (estado) => {
         if (estado === "en_adopcion") {
@@ -21,7 +52,6 @@ function MascotaDetalle({
         }
         return estado.charAt(0).toUpperCase() + estado.slice(1);
     };
-
     // Cambio el color de la etiqueta según el estado
     const colorEstado = (estado) => {
         if (estado === "perdida") {
@@ -41,8 +71,7 @@ function MascotaDetalle({
         }
 
         return "text-bg-secondary";
-    };
-
+    };  
     return (
         <article className="detalle-mascota">
             <div className="card border-0 shadow detalle-card">
@@ -187,7 +216,7 @@ function MascotaDetalle({
 
                             <button
                                 className="btn btn-outline-danger mt-3"
-                                onClick={onEliminar}
+                                onClick={handleEliminarMascota}
                             >
                                 Eliminar mascota
                             </button>
@@ -237,7 +266,7 @@ function MascotaDetalle({
                                             <button
                                                 className="btn btn-sm btn-outline-danger"
                                                 onClick={() =>
-                                                    onEliminarComentario(
+                                                    handleEliminarComentario(
                                                         comentario.id
                                                     )
                                                 }
@@ -256,6 +285,57 @@ function MascotaDetalle({
                     )}
                 </div>
             </section>
+
+            {mostrarConfirmacion && (
+                <>
+                    <div
+                        className="modal fade show d-block"
+                        tabIndex="-1"
+                    >
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content border-0 shadow">
+                                <div className="modal-header">
+                                    <h2 className="modal-title fs-5">
+                                        Confirmar eliminación
+                                    </h2>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        onClick={cerrarConfirmacion}
+                                    ></button>
+                                </div>
+
+                                <div className="modal-body">
+                                    <p className="mb-0">
+                                        {tipoEliminar === "mascota"
+                                            ? "¿Estás seguro de eliminar esta mascota?"
+                                            : "¿Estás seguro de eliminar este comentario?"}
+                                    </p>
+                                </div>
+
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        onClick={cerrarConfirmacion}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-danger"
+                                        onClick={confirmarEliminacion}
+                                    >
+                                        Sí, eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="modal-backdrop fade show"></div>
+                </>
+            )}
         </article>
     );
 }
